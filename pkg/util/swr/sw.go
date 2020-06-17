@@ -41,6 +41,9 @@ func (s *Sw) Get() interface{} {
 			res = s
 		}
 	}
+	if res == nil {
+		return nil
+	}
 	res.CurrentWeight -= s.total
 	return res.Item
 }
