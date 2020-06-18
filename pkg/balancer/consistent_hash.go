@@ -11,9 +11,8 @@ import (
 
 const (
 	ConsistentHasBalanceName = "ConsistentHash"
-	ConsistentHashKey = "ConsistentHashKey"
+	ConsistentHashKey        = "ConsistentHashKey"
 )
-
 
 func init() {
 	balancer.Register(newConsistentHashBalanceBuilder())
@@ -26,7 +25,6 @@ func newConsistentHashBalanceBuilder() balancer.Builder {
 }
 
 type ConsistentHashPickerBuilder struct {
-
 }
 
 func (*ConsistentHashPickerBuilder) Build(readySCs map[resolver.Address]balancer.SubConn) balancer.Picker {
@@ -46,11 +44,10 @@ func (*ConsistentHashPickerBuilder) Build(readySCs map[resolver.Address]balancer
 	}
 }
 
-
 type ConsistentHashPicker struct {
-	hash *consistentHash.Hash
-	subConns          map[string]balancer.SubConn
-	mu sync.Mutex
+	hash     *consistentHash.Hash
+	subConns map[string]balancer.SubConn
+	mu       sync.Mutex
 }
 
 func (c *ConsistentHashPicker) Pick(ctx context.Context, info balancer.PickInfo) (conn balancer.SubConn, done func(balancer.DoneInfo), err error) {

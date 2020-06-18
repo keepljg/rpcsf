@@ -30,6 +30,3 @@ func DefaultConfig() *GrpcClientConfig {
 	}
 }
 
-func SetConfig(config *GrpcClientConfig) {
-
-}

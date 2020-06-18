@@ -7,11 +7,11 @@ import (
 	"google.golang.org/grpc/resolver"
 	"sync"
 )
+
 const (
 	AppointBalanceName = "appoint"
-	addrKey = "addr"
+	addrKey            = "addr"
 )
-
 
 func init() {
 	// 注册到grpc 到balance map中
@@ -39,10 +39,9 @@ func (*AppointPickBuilder) Build(readySCs map[resolver.Address]balancer.SubConn)
 	}
 }
 
-
 type appointPicker struct {
 	subConns map[string]balancer.SubConn
-	mu sync.Mutex
+	mu       sync.Mutex
 }
 
 func (a *appointPicker) Pick(ctx context.Context, info balancer.PickInfo) (conn balancer.SubConn, done func(balancer.DoneInfo), err error) {
@@ -59,6 +58,3 @@ func (a *appointPicker) Pick(ctx context.Context, info balancer.PickInfo) (conn 
 	}
 	return subConn, nil, nil
 }
-
-
-

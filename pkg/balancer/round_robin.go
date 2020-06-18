@@ -17,7 +17,7 @@ func init() {
 }
 
 func newRoundRobinBuilder() balancer.Builder {
-	return base.NewBalancerBuilderWithConfig(RoundRobinBalanceName, &RoundRobinPickerBuilder{}, base.Config{HealthCheck:true})
+	return base.NewBalancerBuilderWithConfig(RoundRobinBalanceName, &RoundRobinPickerBuilder{}, base.Config{HealthCheck: true})
 }
 
 type RoundRobinPickerBuilder struct {
@@ -27,21 +27,20 @@ func (*RoundRobinPickerBuilder) Build(readySCs map[resolver.Address]balancer.Sub
 	if len(readySCs) == 0 {
 		return base.NewErrPicker(balancer.ErrNoSubConnAvailable)
 	}
-	subconns := make([]balancer.SubConn, 0 , len(readySCs))
+	subconns := make([]balancer.SubConn, 0, len(readySCs))
 	for _, subconn := range readySCs {
 		subconns = append(subconns, subconn)
 	}
 	return &roundRobinPicker{
-		subconns:subconns,
-		mu:sync.Mutex{},
+		subconns: subconns,
+		mu:       sync.Mutex{},
 	}
 }
 
-
 type roundRobinPicker struct {
 	subconns []balancer.SubConn
-	next int
-	mu sync.Mutex
+	next     int
+	mu       sync.Mutex
 }
 
 func (r *roundRobinPicker) Pick(ctx context.Context, info balancer.PickInfo) (conn balancer.SubConn, done func(balancer.DoneInfo), err error) {
@@ -61,4 +60,3 @@ func (r *roundRobinPicker) Pick(ctx context.Context, info balancer.PickInfo) (co
 	r.mu.Unlock()
 	return sc, nil, nil
 }
-

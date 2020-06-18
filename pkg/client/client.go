@@ -20,13 +20,16 @@ func NewClient(config *GrpcClientConfig) *Client {
 		c.UseOpt(grpc.WithBlock())
 	}
 
-	c.UseOpt(grpc.WithBalancerName(config.BalanceName), grpc.WithInsecure(), grpc.WithKeepaliveParams(
+	c.UseOpt(grpc.WithInsecure(), grpc.WithKeepaliveParams(
 		keepalive.ClientParameters{
 			Time:                config.Time,
 			Timeout:             config.Timeout,
 			PermitWithoutStream: config.PermitWithoutStream,
 		}))
 
+	if config.BalanceName != "" {
+		c.UseOpt(grpc.WithBalancerName(config.BalanceName))
+	}
 	return c
 }
 

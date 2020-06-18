@@ -64,7 +64,9 @@ func (r *etcdv3Resovler) GetAllAddresses() []resolver.Address {
 				v := addr
 				ret = append(ret, resolver.Address{
 					Addr: v.Addr,
-					//Metadata: &v.Metadata, // todo
+					Metadata: map[string]interface{}{
+						"weight": v.Weight,
+					},
 				})
 			}
 		}

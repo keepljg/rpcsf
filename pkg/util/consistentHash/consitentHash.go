@@ -11,8 +11,8 @@ const defaultReplicas = 5
 type hash func([]byte) uint32
 
 type Hash struct {
-	h        hash  // hash 函数
-	replicas int    // 副本数
+	h        hash // hash 函数
+	replicas int  // 副本数
 	set      map[int]string
 	keys     []int
 }

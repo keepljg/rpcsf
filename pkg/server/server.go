@@ -10,6 +10,7 @@ type ServerInfo struct {
 	Scheme        string
 	ServerName    string
 	ServerVersion string
+	Weight        int
 }
 
 type Server interface {

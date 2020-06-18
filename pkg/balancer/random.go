@@ -16,8 +16,8 @@ func init() {
 	balancer.Register(newRandomBuilder())
 }
 
-func newRandomBuilder() balancer.Builder{
-	return base.NewBalancerBuilderWithConfig(RandomPickerBuilderName, &RandomPickerBuilder{}, base.Config{HealthCheck:true})
+func newRandomBuilder() balancer.Builder {
+	return base.NewBalancerBuilderWithConfig(RandomPickerBuilderName, &RandomPickerBuilder{}, base.Config{HealthCheck: true})
 }
 
 type RandomPickerBuilder struct {
@@ -36,7 +36,6 @@ func (*RandomPickerBuilder) Build(readySCs map[resolver.Address]balancer.SubConn
 	}
 }
 
-
 type randomPicker struct {
 	subconns []balancer.SubConn
 }
@@ -51,4 +50,3 @@ func (r *randomPicker) Pick(ctx context.Context, info balancer.PickInfo) (conn b
 	sc := r.subconns[rand.Intn(len(r.subconns))]
 	return sc, nil, nil
 }
-

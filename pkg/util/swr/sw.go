@@ -1,26 +1,26 @@
 package swr
 
 type smoothWeight struct {
-	Item interface{}
-	Weight int
+	Item          interface{}
+	Weight        int
 	CurrentWeight int
 }
 
-func NewSw() *Sw{
+func NewSw() *Sw {
 	return &Sw{
-		sms:make([]*smoothWeight, 0),
+		sms: make([]*smoothWeight, 0),
 	}
 }
 
 type Sw struct {
-	sms []*smoothWeight
-	len int
+	sms   []*smoothWeight
+	len   int
 	total int
 }
 
 func (s *Sw) Add(item interface{}, weight int) {
 	sm := &smoothWeight{
-		Item: item,
+		Item:   item,
 		Weight: weight,
 	}
 	s.sms = append(s.sms, sm)
@@ -34,7 +34,7 @@ func (s *Sw) Get() interface{} {
 		return nil
 	}
 	var res *smoothWeight
-	for i := 0; i < s.len; i ++ {
+	for i := 0; i < s.len; i++ {
 		s := s.sms[i]
 		s.CurrentWeight += s.Weight
 		if res == nil || res.CurrentWeight < s.Weight {

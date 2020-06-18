@@ -20,12 +20,11 @@ func init() {
 
 func newSwrBuilder() balancer.Builder {
 	return base.NewBalancerBuilderWithConfig(SwrBuilderName, &SwrPickerBuilder{}, base.Config{
-		HealthCheck:true,
+		HealthCheck: true,
 	})
 }
 
 type SwrPickerBuilder struct {
-
 }
 
 func (s *SwrPickerBuilder) Build(readySCs map[resolver.Address]balancer.SubConn) balancer.Picker {
@@ -35,7 +34,7 @@ func (s *SwrPickerBuilder) Build(readySCs map[resolver.Address]balancer.SubConn)
 	sw := swr.NewSw()
 	for address, subconn := range readySCs {
 		var weight = 1
-		metaData, ok  := address.Metadata.(map[string]string)
+		metaData, ok := address.Metadata.(map[string]string)
 		if ok {
 			w := metaData["weight"]
 			weight, _ = strconv.Atoi(w)
@@ -50,7 +49,6 @@ func (s *SwrPickerBuilder) Build(readySCs map[resolver.Address]balancer.SubConn)
 		sw: sw,
 	}
 }
-
 
 type swrPicker struct {
 	mu sync.Mutex
