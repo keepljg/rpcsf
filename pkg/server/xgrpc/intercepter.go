@@ -99,7 +99,6 @@ func (s *Server) Tracer() grpc.UnaryServerInterceptor {
 	}
 }
 
-
 func splitMethodName(fullMethodName string) (string, string) {
 	fullMethodName = strings.TrimPrefix(fullMethodName, "/") // remove leading slash
 	if i := strings.Index(fullMethodName, "/"); i >= 0 {

@@ -1,4 +1,4 @@
-package consistentHash
+package consistent_hash
 
 import (
 	"fmt"

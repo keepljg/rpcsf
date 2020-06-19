@@ -18,24 +18,23 @@ func ReadConfig(name string) *Config {
 	return &Config{}
 }
 
-
 func initJaeger() {
 	conf := ReadConfig("jaeger")
 	jaegerConf := config.Configuration{
-		ServiceName:         conf.ServiceName,
-		Disabled:            true,
-		RPCMetrics:          true,
-		Sampler:             &config.SamplerConfig{
-			Type:                    conf.SamplerType,
-			Param:                   conf.Param,
+		ServiceName: conf.ServiceName,
+		Disabled:    true,
+		RPCMetrics:  true,
+		Sampler: &config.SamplerConfig{
+			Type:  conf.SamplerType,
+			Param: conf.Param,
 		},
-		Reporter:            &config.ReporterConfig{
+		Reporter: &config.ReporterConfig{
 			BufferFlushInterval: time.Second * 1,
 			LogSpans:            false,
-			LocalAgentHostPort: conf.JaegerAgentAddr,
+			LocalAgentHostPort:  conf.JaegerAgentAddr,
 		},
 	}
-	tracer,_, err  := jaegerConf.NewTracer()
+	tracer, _, err := jaegerConf.NewTracer()
 	if err != nil {
 		panic(err)
 	}

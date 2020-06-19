@@ -15,7 +15,7 @@ type Prom struct {
 
 func NewProm() *Prom {
 	once.Do(func() {
-		prometheus.MustRegister(prometheus.NewGoCollector())  // 开启go程序metric
+		prometheus.MustRegister(prometheus.NewGoCollector()) // 开启go程序metric
 	})
 	return &Prom{}
 }
@@ -25,8 +25,8 @@ func (p *Prom) RegisterTimer(name string, help string, labels []string) *Prom {
 		return p
 	}
 	p.timer = prometheus.NewHistogramVec(prometheus.HistogramOpts{
-		Name:        name,
-		Help:        help,
+		Name: name,
+		Help: help,
 	}, labels)
 	prometheus.MustRegister(p.timer)
 	return p
@@ -37,8 +37,8 @@ func (p *Prom) RegisterCounter(name string, help string, labels []string) *Prom 
 		return p
 	}
 	p.counter = prometheus.NewCounterVec(prometheus.CounterOpts{
-		Name:        name,
-		Help:        help,
+		Name: name,
+		Help: help,
 	}, labels)
 	prometheus.MustRegister(p.counter)
 	return p
@@ -49,8 +49,8 @@ func (p *Prom) RegisterState(name string, help string, labels []string) *Prom {
 		return p
 	}
 	p.state = prometheus.NewGaugeVec(prometheus.GaugeOpts{
-		Name:        name,
-		Help:        help,
+		Name: name,
+		Help: help,
 	}, labels)
 	prometheus.MustRegister(p.state)
 	return p
