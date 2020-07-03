@@ -5,7 +5,7 @@ import (
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
 	"google.golang.org/grpc/resolver"
-	"rpcsf/pkg/util/consistentHash"
+	"rpcsf/pkg/util/consistent_hash"
 	"sync"
 )
 
@@ -31,7 +31,7 @@ func (*ConsistentHashPickerBuilder) Build(readySCs map[resolver.Address]balancer
 	if len(readySCs) == 0 {
 		return base.NewErrPicker(balancer.ErrNoSubConnAvailable)
 	}
-	hash := consistentHash.NewHash(-1, nil)
+	hash := consistent_hash.NewHash(-1, nil)
 	subConns := make(map[string]balancer.SubConn)
 	for address, subConn := range readySCs {
 		hash.Add(address.Addr)
@@ -45,7 +45,7 @@ func (*ConsistentHashPickerBuilder) Build(readySCs map[resolver.Address]balancer
 }
 
 type ConsistentHashPicker struct {
-	hash     *consistentHash.Hash
+	hash     *consistent_hash.Hash
 	subConns map[string]balancer.SubConn
 	mu       sync.Mutex
 }
