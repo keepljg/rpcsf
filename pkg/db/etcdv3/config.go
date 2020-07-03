@@ -3,6 +3,7 @@ package etcdv3
 import "time"
 
 type Config struct {
+	Name      string
 	Endpoints []string `json:"endpoints"`
 	// 连接超时时间
 	DialTimeout          time.Duration `json:"dialTimeout"`
@@ -10,7 +11,7 @@ type Config struct {
 	DialKeepAliveTimeout time.Duration `json:"dialKeepAliveTimeout"`
 }
 
-func ReadConfig(name string) *Config {
+func ReadConfig(name ...string) *Config {
 	// todo
 	return &Config{}
 }

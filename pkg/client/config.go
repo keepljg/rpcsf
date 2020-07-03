@@ -29,4 +29,3 @@ func DefaultConfig() *GrpcClientConfig {
 		PermitWithoutStream: false,
 	}
 }
-

@@ -84,6 +84,7 @@ func (s *Server) Tracer() grpc.UnaryServerInterceptor {
 		} else {
 			serverSpan = opentracing.StartSpan("RPC Server " + info.FullMethod)
 		}
+		defer serverSpan.Finish()
 		ctx = trace.ContextWithSpan(ctx, serverSpan) // 将span 写入ctx中
 		resp, err = handler(ctx, req)
 		if err != nil {
@@ -98,7 +99,6 @@ func (s *Server) Tracer() grpc.UnaryServerInterceptor {
 		return resp, err
 	}
 }
-
 
 func splitMethodName(fullMethodName string) (string, string) {
 	fullMethodName = strings.TrimPrefix(fullMethodName, "/") // remove leading slash
